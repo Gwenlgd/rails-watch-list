@@ -1,0 +1,7 @@
+<h1>Edit the list <%= @list.name %></h1>
+
+<%# <p>Find me in app/views/lists/new.html.erb</p> %>
+
+<%= render 'form', list: @list %>
+
+<%= link_to 'Back', lists_path %>
