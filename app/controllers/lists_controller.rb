@@ -1,11 +1,13 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: [:show, :edit, :update, :destroy]
+  before_action :set_list, only: [:show, :destroy]
 
   def index
     @lists = List.all
   end
 
   def show
+    @bookmark = Bookmark.new
+    @review = Review.new(list: @list)
   end
 
   def new
@@ -15,21 +17,15 @@ class ListsController < ApplicationController
   def create
     @list = List.new(list_params)
     if @list.save
-      redirect_to @list, notice: 'New list was successfully created.'
+      redirect_to @list
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
-  def edit
-  end
-
-  def update
-    if @list.update(list_params)
-      redirect_to @list, notice: 'list was successfully updated.'
-    else
-      render :edit
-    end
+  def destroy
+    @list.destroy
+    redirect_to lists_path, status: :see_other
   end
 
   private
@@ -39,6 +35,6 @@ class ListsController < ApplicationController
   end
 
   def list_params
-    params.require(:list).permit(:name)
+    params.require(:list).permit(:name, :photo)
   end
 end
