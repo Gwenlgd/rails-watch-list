@@ -4,10 +4,10 @@
 
 <ul>
 <% @list.bookmarks.each do |bookmark| %>
-<li> <%= bookmark.comment %></li> - <li><%= bookmark.movie.title %></li>
+<li> <%= bookmark.comment %> - <%= bookmark.movie.title %> - <%= link_to "🗑️", bookmark_path(bookmark), data: {turbo_method: "delete", turbo_confirm: "Are you sure you want to remove it ?"} %></li>
 <% end %>
-
 </ul>
 
 
+<%= link_to "delete this list", list_path(@list), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" } %>
 <%= link_to 'Back', lists_path %>
